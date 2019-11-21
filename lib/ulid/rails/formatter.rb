@@ -4,7 +4,7 @@ module ULID
   module Rails
     module Formatter
       def self.format(v)
-        v.length == 32 ? Base32::Crockford.encode(v.hex) : v
+        v.length == 32 ? Base32::Crockford.encode(v.hex).rjust(26, "0") : v
       end
 
       def self.unformat(v)
