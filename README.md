@@ -67,7 +67,7 @@ class MyModel < ApplicationRecord
 
   # defines `created_at` method which extract timestamp value from id column.
   # This way you don't need physical `created_at` column.
-  ulid_extract_timestamp :id, :created_at 
+  ulid_extract_timestamp :id, :created_at
 end
 ```
 
@@ -92,7 +92,7 @@ end
 
 ### Auto-generate ULID
 
-`primary_key` is `true`, ULID is auto-generated before create by default.
+If `primary_key` is `true`, ULID is auto-generated before create by default.
 You can enable or disable auto-generation with `auto_generate` option.
 
 ```
