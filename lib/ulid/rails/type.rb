@@ -18,6 +18,8 @@ module ULID
           @formatter.format(value.to_s)
         elsif value&.encoding == Encoding::ASCII_8BIT
           @formatter.format(value.unpack("H*")[0])
+        elsif value&.length == 32
+          @formatter.format(value)
         else
           super
         end
