@@ -33,7 +33,7 @@ end
 
 class User < ActiveRecord::Base
   include ULID::Rails
-  ulid :id, primary_key: true, auto_generate: true
+  ulid :id, primary_key: true
 
   has_many :books
   has_many :user_articles
@@ -42,7 +42,7 @@ end
 
 class Book < ActiveRecord::Base
   include ULID::Rails
-  ulid :id, primary_key: true, auto_generate: true
+  ulid :id, primary_key: true
   ulid :user_id
 
   belongs_to :user
@@ -50,7 +50,7 @@ end
 
 class UserArticle < ActiveRecord::Base
   include ULID::Rails
-  ulid :id, primary_key: true, auto_generate: true
+  ulid :id, primary_key: true
   ulid :user_id
   ulid :article_id
 
@@ -60,5 +60,5 @@ end
 
 class Article < ActiveRecord::Base
   include ULID::Rails
-  ulid :id, primary_key: true, auto_generate: true
+  ulid :id, primary_key: true
 end

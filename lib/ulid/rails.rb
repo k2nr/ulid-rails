@@ -12,25 +12,30 @@ module ULID
     extend ActiveSupport::Concern
 
     class_methods do
-      def ulid(column_name = :id, primary_key: false, auto_generate: false)
+      def ulid(column_name, primary_key: false, auto_generate: nil)
         attribute column_name, ULID::Rails::Type.new
 
-        before_create do
-          send("#{column_name}=", ULID.generate) if send(column_name).nil? && auto_generate
+        auto_generate = auto_generate.nil? ? primary_key : false
+        if auto_generate
+          before_create do
+            send("#{column_name}=", ULID.generate) if send(column_name).nil?
+          end
         end
 
-        if primary_key
-          define_method :created_at do
+        def ulid_extract_timestamp(ulid_column, timestamp_column = :created_at)
+          define_method timestamp_column do
             at = super() rescue nil
-            if !at && (id_val = send(column_name))
+            if !at && (id_val = send(ulid_column))
               Time.zone.at((Base32::Crockford.decode(id_val) >> 80) / 1000.0)
             else
               at
             end
           end
 
-          define_singleton_method(:timestamp_attributes_for_create) do
-            []
+          if timestamp_column.to_s == "created_at"
+            define_singleton_method(:timestamp_attributes_for_create) do
+              []
+            end
           end
         end
       end
