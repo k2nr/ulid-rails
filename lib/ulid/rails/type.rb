@@ -14,20 +14,24 @@ module ULID
       end
 
       def cast(value)
-        if value.is_a?(Data)
-          @formatter.format(value.to_s)
-        elsif value&.encoding == Encoding::ASCII_8BIT
-          @formatter.format(value.unpack("H*")[0])
-        elsif value&.length == 32
-          @formatter.format(value)
-        else
-          super
-        end
+        return nil if value.nil?
+
+        value = value.to_s if value.is_a?(Data)
+        value = value.unpack("H*")[0] if value.encoding == Encoding::ASCII_8BIT
+        value = value[2..] if value.start_with?("\\x")
+
+        value.length == 32 ? @formatter.format(value) : super
       end
 
       def serialize(value)
         return if value.nil?
-        Data.new(@formatter.unformat(value))
+
+        case ActiveRecord::Base.connection_config[:adapter]
+        when "mysql2", "sqlite3"
+          Data.new(@formatter.unformat(value))
+        when "postgresql"
+          Data.new([@formatter.unformat(value)].pack("H*"))
+        end
       end
     end
   end

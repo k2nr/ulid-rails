@@ -22,22 +22,12 @@ Or install it yourself as:
 
 ### Migrations
 
-If you use MySQL, specify `id: false` to `create_table` and add `id` column as 16-byte binary type.
+Specify `id: false` to `create_table` and add `id` column as 16-byte binary type.
 
 ```ruby
   def change
     create_table :users, id: false do |t|
       t.binary :id, limit: 16, primary_key: true # MySQL
-      # ...
-    end
-  end
-```
-
-If you use PostgreSQL, just specify `id: :uuid` to `create_table`
-
-```ruby
-  def change
-    create_table :users, id: :uuid do |t|
       # ...
     end
   end
