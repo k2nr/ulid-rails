@@ -1,4 +1,9 @@
 # ulid-rails CHANGELOG
+
+## 0.3
+
+- Support PostgresQL
+
 ## 0.2
 
 ### Breaking Changes
