@@ -27,7 +27,7 @@ Specify `id: false` to `create_table` and add `id` column as 16-byte binary type
 ```ruby
   def change
     create_table :users, id: false do |t|
-      t.binary :id, limit: 16, primary_key: true # MySQL
+      t.binary :id, limit: 16, primary_key: true
       # ...
     end
   end
@@ -63,7 +63,7 @@ end
 
 ### `created_at` virtual column
 
-**MySQL Only (for now)**
+**MySQL 5.7 and higher Only (for now)**
 
 You can define a "virtual column" in MySQL DB that acts same as a physical column.
 Defining the virtual `created_at` is kind of comlicated so this gem provides a helper method for it.
