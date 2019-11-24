@@ -93,8 +93,6 @@ class Model < ApplicationRecord
 end
 ```
 
-## FAQ
-
 ### Foreign Keys
 
 You need to specicfy `type` option
@@ -104,6 +102,16 @@ You need to specicfy `type` option
     create_table :admin_usees do |t|
       t.references :admin_user, foreign_key: true, type: "BINARY(16)"
     end
+```
+
+## Development
+
+### Run tests
+
+Just run the below command to test with all supported DB engines.
+
+```
+$ docker-compose run test
 ```
 
 ## License

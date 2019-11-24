@@ -1,11 +1,65 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require 'irb'
 require "ulid/rails"
 
 require "minitest/autorun"
 
+db_sets = {
+  "sqlite3" => {
+    adapter: 'sqlite3',
+    name: ':memory:'
+  },
+  "mysql56" => {
+    host: 'mysql56',
+    adapter: 'mysql2',
+    username: 'root',
+    password: 'password',
+    name: 'test'
+  },
+  "mysql57" => {
+    host: 'mysql57',
+    adapter: 'mysql2',
+    username: 'root',
+    password: 'password',
+    name: 'test'
+  },
+  "mysql80" => {
+    host: 'mysql80',
+    adapter: 'mysql2',
+    username: 'root',
+    password: 'password',
+    name: 'test'
+  },
+  "pg12" => {
+    host: 'pg12',
+    adapter: 'postgresql',
+    username: 'postgres',
+    name: 'test'
+  },
+}
+db = db_sets[ENV["DB"]] || db_sets['sqlite3']
+
+if db[:adapter] != 'sqlite3'
+  ActiveRecord::Base.establish_connection(
+    host: db[:host],
+    adapter: db[:adapter],
+    username: db[:username],
+    password: db[:password],
+  #  database: db[:name]
+  )
+  
+  ActiveRecord::Base.connection.drop_database(db[:name]) rescue nil
+  ActiveRecord::Base.connection.create_database(db[:name])
+  
+  ActiveRecord::Base.connection.disconnect!
+end
+
 ActiveRecord::Base.establish_connection(
-  :adapter => "sqlite3",
-  :database => ":memory:"
+  host: db[:host],
+  adapter: db[:adapter],
+  username: db[:username],
+  password: db[:password],
+  database: db[:name]
 )
 
 ActiveRecord::Schema.define do

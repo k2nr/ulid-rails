@@ -1,0 +1,44 @@
+version: '3.6'
+services:
+  test:
+    image: ruby:2.6
+    command: sh -c "rm Gemfile.lock && bundle install && bin/run_tests"
+    depends_on:
+      - mysql56
+      - mysql57
+      - mysql80
+      - pg12
+    working_dir: /app
+    volumes:
+      - bundle:/usr/local/bundle
+      - .:/app
+    
+  mysql56:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    command: --innodb-large-prefix --innodb-file-format=barracuda
+    healthcheck:
+      test:  mysql --password=password -e "show databases;"
+  mysql57:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    healthcheck:
+      test:  mysql --password=password -e "show databases;"
+  mysql80:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    healthcheck:
+      test:  mysql --password=password -e "show databases;"
+  pg12:
+    image: postgres:12
+    environment:
+      PGDATA: /data
+      POSTGRES_DB: db
+    healthcheck:
+      test: echo "\\l" | psql -U postgre
+volumes:
+  bundle:
