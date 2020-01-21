@@ -2,7 +2,7 @@ version: '3.6'
 services:
   test:
     image: ruby:2.6
-    command: sh -c "rm Gemfile.lock && bundle install && bin/run_tests"
+    command: sh -c "rm -f Gemfile.lock && bundle install && bin/run_tests"
     depends_on:
       - mysql56
       - mysql57
@@ -12,7 +12,7 @@ services:
     volumes:
       - bundle:/usr/local/bundle
       - .:/app
-    
+
   mysql56:
     image: mysql:5.6
     environment:
