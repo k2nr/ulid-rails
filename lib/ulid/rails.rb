@@ -21,21 +21,21 @@ module ULID
             send("#{column_name}=", ULID.generate) if send(column_name).nil?
           end
         end
+      end
 
-        def ulid_extract_timestamp(ulid_column, timestamp_column = :created_at)
-          define_method timestamp_column do
-            at = super() rescue nil
-            if !at && (id_val = send(ulid_column))
-              Time.zone.at((Base32::Crockford.decode(id_val) >> 80) / 1000.0)
-            else
-              at
-            end
+      def ulid_extract_timestamp(ulid_column, timestamp_column = :created_at)
+        define_method timestamp_column do
+          at = super() rescue nil
+          if !at && (id_val = send(ulid_column))
+            Time.zone.at((Base32::Crockford.decode(id_val) >> 80) / 1000.0)
+          else
+            at
           end
+        end
 
-          if timestamp_column.to_s == "created_at"
-            define_singleton_method(:timestamp_attributes_for_create) do
-              []
-            end
+        if timestamp_column.to_s == "created_at"
+          define_singleton_method(:timestamp_attributes_for_create) do
+            []
           end
         end
       end
