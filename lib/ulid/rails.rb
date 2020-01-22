@@ -15,7 +15,7 @@ module ULID
       def ulid(column_name, primary_key: false, auto_generate: nil)
         attribute column_name, ULID::Rails::Type.new
 
-        auto_generate = auto_generate.nil? ? primary_key : false
+        auto_generate = primary_key ? primary_key : auto_generate
         if auto_generate
           before_create do
             send("#{column_name}=", ULID.generate) if send(column_name).nil?
