@@ -7,8 +7,30 @@ services:
       - mysql56
       - mysql57
       - mysql80
+      - pg95
+      - pg10
+      - pg11
       - pg12
     working_dir: /app
+    environment:
+      AR_VERSION: 6.0 # other option is 5.2
+    volumes:
+      - bundle:/usr/local/bundle
+      - .:/app
+  test_ruby_2_5:
+    image: ruby:2.5
+    command: sh -c "rm -f Gemfile.lock && bundle install && bin/run_tests"
+    depends_on:
+      - mysql56
+      - mysql57
+      - mysql80
+      - pg95
+      - pg10
+      - pg11
+      - pg12
+    working_dir: /app
+    environment:
+      AR_VERSION: 6.0 # other option is 5.2
     volumes:
       - bundle:/usr/local/bundle
       - .:/app
@@ -33,9 +55,34 @@ services:
       MYSQL_ROOT_PASSWORD: password
     healthcheck:
       test:  mysql --password=password -e "show databases;"
+  pg95:
+    image: postgres:9.5
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      PGDATA: /data
+      POSTGRES_DB: db
+    healthcheck:
+      test: echo "\\l" | psql -U postgre
+  pg10:
+    image: postgres:10
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      PGDATA: /data
+      POSTGRES_DB: db
+    healthcheck:
+      test: echo "\\l" | psql -U postgre
+  pg11:
+    image: postgres:11
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      PGDATA: /data
+      POSTGRES_DB: db
+    healthcheck:
+      test: echo "\\l" | psql -U postgre
   pg12:
     image: postgres:12
     environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
       PGDATA: /data
       POSTGRES_DB: db
     healthcheck:

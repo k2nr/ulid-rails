@@ -29,14 +29,28 @@ class ULID::RailsTest < Minitest::Test
 
   def test_has_many_through
     # Doesn't work until https://github.com/rails/rails/issues/35839 is released
-#    user = User.create!
-#    article = user.articles.create!
-#    user.reload
-#
-#    binding.irb
-#
-#    assert user.articles.count == 1
-#    assert user.articles[0] == article
+    # Working correctly if has_many in many-to-many model is defined
+    user = User.create!
+    article = user.articles.create!
+    user.reload
 
+    assert user.articles.count == 1
+    assert user.articles[0] == article
   end
+
+  # def test_has_many_through_from_has_many_through
+  #   # Doesn't work for MySQL and Postgresql
+  #   # Cause:
+  #   # ULID::Rails::Type#serialize and 
+  #   # ULID::Rails::Type#deserialize is not called
+  #   # Instead ActiveModel::Type::Binary#serialize and
+  #   # ActiveModel::Type::Binary#deserialize is called
+  #   user = User.create!
+  #   article = user.articles.create!
+  #   comment = article.comments.create! # working correctly
+  #   user.reload
+
+  #   assert user.articles.count == 1
+  #   assert user.comments == [comment] # not working
+  # end
 end
