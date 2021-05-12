@@ -1,11 +1,20 @@
-require "active_model/type"
-require "ulid/rails/formatter"
+require 'ulid/rails/formatter'
+
+RAILS_BELOW_5 = ActiveRecord::VERSION::MAJOR < 5
+
+if RAILS_BELOW_5
+  require 'active_record/type'
+  TYPE_BINARY = ActiveRecord::Type::Binary
+else
+  require 'active_model/type'
+  TYPE_BINARY = ActiveModel::Type::Binary
+end
 
 module ULID
   module Rails
-    class Type < ActiveModel::Type::Binary
-      class Data < ActiveModel::Type::Binary::Data
-        alias_method :hex, :to_s
+    class Type < TYPE_BINARY
+      class Data < TYPE_BINARY::Data
+        alias hex to_s
       end
 
       def initialize(formatter = Formatter)
@@ -13,24 +22,49 @@ module ULID
         super()
       end
 
-      def cast(value)
-        return nil if value.nil?
+      if RAILS_BELOW_5
+        def type_cast(value)
+          return nil if value.nil?
 
-        value = value.to_s if value.is_a?(Data)
-        value = value.unpack("H*")[0] if value.encoding == Encoding::ASCII_8BIT
-        value = value[2..-1] if value.start_with?("\\x")
+          value = value.to_s if value.is_a?(Data)
+          value = value.unpack1('H*') if value.encoding == Encoding::ASCII_8BIT
+          value = value[2..-1] if value.start_with?('\\x')
 
-        value.length == 32 ? @formatter.format(value) : super
+          value.length == 32 ? @formatter.format(value) : super
+        end
+
+        def type_cast_for_database(value)
+          return if value.nil?
+
+          case ActiveRecord::Base.connection_config[:adapter]
+          when 'mysql2', 'sqlite3'
+            Data.new(@formatter.unformat(value))
+          when 'postgresql'
+            Data.new([@formatter.unformat(value)].pack('H*'))
+          end
+        end
       end
 
-      def serialize(value)
-        return if value.nil?
+      unless RAILS_BELOW_5
+        def cast(value)
+          return nil if value.nil?
 
-        case ActiveRecord::Base.connection_config[:adapter]
-        when "mysql2", "sqlite3"
-          Data.new(@formatter.unformat(value))
-        when "postgresql"
-          Data.new([@formatter.unformat(value)].pack("H*"))
+          value = value.to_s if value.is_a?(Data)
+          value = value.unpack1('H*') if value.encoding == Encoding::ASCII_8BIT
+          value = value[2..-1] if value.start_with?('\\x')
+
+          value.length == 32 ? @formatter.format(value) : super
+        end
+
+        def serialize(value)
+          return if value.nil?
+
+          case ActiveRecord::Base.connection_config[:adapter]
+          when 'mysql2', 'sqlite3'
+            Data.new(@formatter.unformat(value))
+          when 'postgresql'
+            Data.new([@formatter.unformat(value)].pack('H*'))
+          end
         end
       end
     end

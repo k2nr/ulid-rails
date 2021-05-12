@@ -1,11 +1,18 @@
 require "active_record"
 require "active_support/concern"
-require "active_model/type"
 require "ulid"
 require "base32/crockford"
 require "ulid/rails/version"
 require "ulid/rails/type"
 require "ulid/rails/patch"
+
+RAILS_BELOW_5 = ActiveRecord::VERSION::MAJOR < 5
+
+if RAILS_BELOW_5
+  require 'active_record/type'
+else
+  require 'active_model/type'
+end
 
 module ULID
   module Rails
@@ -41,7 +48,10 @@ module ULID
       end
     end
 
-    ActiveModel::Type.register(:ulid, ULID::Rails::Type)
+    ActiveModel::Type.register(:ulid, ULID::Rails::Type) unless RAILS_BELOW_5
+
+    # ActiveRecord::Type.register(:ulid, ULID::Rails::Type) if RAILS_BELOW_5
+    # ActiveRecord::Type::TypeMap.new.register_type(:ulid, ULID::Rails::Type) if RAILS_BELOW_5
     ActiveRecord::ConnectionAdapters::TableDefinition.send :include, Patch::Migrations
   end
 end
