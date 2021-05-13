@@ -17,7 +17,7 @@ services:
     image: mysql:5.6
     environment:
       MYSQL_ROOT_PASSWORD: password
-    command: --innodb-large-prefix=1 --innodb-file-format=barracuda --innodb-file-per-table=on --innodb-default-row-format='DYNAMIC'
+    command: --innodb-large-prefix --innodb-file-format=barracuda
     healthcheck:
       test:  mysql --password=password -e "show databases;"
   mysql57:

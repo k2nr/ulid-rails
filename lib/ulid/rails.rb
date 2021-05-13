@@ -49,9 +49,6 @@ module ULID
     end
 
     ActiveModel::Type.register(:ulid, ULID::Rails::Type) unless RAILS_BELOW_5
-
-    # ActiveRecord::Type.register(:ulid, ULID::Rails::Type) if RAILS_BELOW_5
-    # ActiveRecord::Type::TypeMap.new.register_type(:ulid, ULID::Rails::Type) if RAILS_BELOW_5
     ActiveRecord::ConnectionAdapters::TableDefinition.send :include, Patch::Migrations
   end
 end
