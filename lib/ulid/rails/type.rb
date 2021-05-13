@@ -27,7 +27,7 @@ module ULID
           return nil if value.nil?
 
           value = value.to_s if value.is_a?(Data)
-          value = value.unpack1('H*') if value.encoding == Encoding::ASCII_8BIT
+          value = value.unpack1('H*') if value.encoding == Encoding::ASCII_8BIT && value.length == 16
           value = value[2..-1] if value.start_with?('\\x')
 
           value.length == 32 ? @formatter.format(value) : super
@@ -37,10 +37,12 @@ module ULID
           return if value.nil?
 
           case ActiveRecord::Base.connection_config[:adapter]
-          when 'mysql2', 'sqlite3'
+          when 'sqlite3'.freeze
+            value
+          when 'mysql2'.freeze
             Data.new(@formatter.unformat(value))
-          when 'postgresql'
-            Data.new([@formatter.unformat(value)].pack('H*'))
+          when 'postgresql'.freeze
+            Data.new([@formatter.unformat(value)].pack("H*"))
           end
         end
       end
