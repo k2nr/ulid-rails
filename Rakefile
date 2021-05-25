@@ -1,5 +1,7 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "bump/tasks"
+require "private_gem/tasks"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"

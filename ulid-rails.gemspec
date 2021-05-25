@@ -4,13 +4,13 @@ require "ulid/rails/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "ulid-rails"
-  spec.version       = ULID::Rails::VERSION
-  spec.authors       = ["Kazunori Kajihiro"]
-  spec.email         = ["kazunori.kajihiro@gmail.com"]
+  spec.authors       = ["Kazunori Kajihiro", "Zendesk"]
 
   spec.summary       = %q{ULID for rails}
   spec.description   = %q{ULID for rails}
   spec.license       = "MIT"
+
+  spec.metadata['allowed_push_host'] = "https://zdrepo.jfrog.io/zdrepo/api/gems/gems-local/"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -29,4 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest", "~> 5.0"
+  spec.add_development_dependency 'bump'
+  spec.add_development_dependency 'private_gem'
 end
