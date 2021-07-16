@@ -26,7 +26,7 @@ module ULID
       def serialize(value)
         return if value.nil?
 
-        case ActiveRecord::Base.connection_config[:adapter]
+        case ActiveRecord::Base.connection_db_config.adapter
         when "mysql2", "sqlite3"
           Data.new(@formatter.unformat(value))
         when "postgresql"
