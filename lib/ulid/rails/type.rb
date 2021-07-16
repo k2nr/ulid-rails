@@ -17,7 +17,7 @@ module ULID
         return nil if value.nil?
 
         value = value.to_s if value.is_a?(Data)
-        value = value.unpack("H*")[0] if value.encoding == Encoding::ASCII_8BIT
+        value = value.unpack("H*")[0] if value.encoding == Encoding::ASCII_8BIT && value.length != 26
         value = value[2..-1] if value.start_with?("\\x")
 
         value.length == 32 ? @formatter.format(value) : super
