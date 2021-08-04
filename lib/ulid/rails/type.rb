@@ -1,5 +1,7 @@
 require "active_model/type"
 require "ulid/rails/formatter"
+require "ulid/rails/validator"
+require "ulid/rails/errors"
 
 module ULID
   module Rails
@@ -8,9 +10,14 @@ module ULID
         alias_method :hex, :to_s
       end
 
-      def initialize(formatter = Formatter)
+      def initialize(formatter = Formatter, validator = Validator)
         @formatter = formatter
+        @validator = validator
         super()
+      end
+
+      def assert_valid_value(value)
+        raise ArgumentError, "`#{value}` is not a ULID format" unless @validator.is_valid?(value)
       end
 
       def deserialize(value)
