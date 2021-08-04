@@ -13,7 +13,7 @@ module ULID
         super()
       end
 
-      def cast(value)
+      def deserialize(value)
         return nil if value.nil?
 
         value = value.to_s if value.is_a?(Data)
