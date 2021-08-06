@@ -38,7 +38,8 @@ services:
     environment:
       PGDATA: /data
       POSTGRES_DB: db
+      POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:
-      test: echo "\\l" | psql -U postgre
+      test: echo "\\l" | psql -U postgres
 volumes:
   bundle:
