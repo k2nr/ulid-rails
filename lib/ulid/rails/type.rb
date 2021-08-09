@@ -26,17 +26,21 @@ module ULID
       def serialize(value)
         return if value.nil?
 
-        if ::ActiveRecord::Base.respond_to?(:connection_db_config)
-          adapter = ::ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
-        else
-          adapter = ::ActiveRecord::Base.connection_config[:adapter]
-        end
-
         case adapter
         when "mysql2", "sqlite3"
           Data.new(@formatter.unformat(value))
         when "postgresql"
           Data.new([@formatter.unformat(value)].pack("H*"))
+        end
+      end
+
+      private
+
+      def adapter
+        if ::ActiveRecord::Base.respond_to?(:connection_db_config)
+          ::ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
+        else
+          ::ActiveRecord::Base.connection_config[:adapter]
         end
       end
     end
