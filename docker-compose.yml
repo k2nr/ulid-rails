@@ -4,10 +4,14 @@ services:
     image: ruby:2.6
     command: sh -c "rm -f Gemfile.lock && bundle install && bin/run_tests"
     depends_on:
-      - mysql56
-      - mysql57
-      - mysql80
-      - pg12
+      pg12:
+        condition: service_healthy
+      mysql56:
+        condition: service_healthy
+      mysql57:
+        condition: service_healthy
+      mysql80:
+        condition: service_healthy
     working_dir: /app
     volumes:
       - bundle:/usr/local/bundle
