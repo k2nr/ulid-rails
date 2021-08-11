@@ -27,6 +27,23 @@ class ULID::RailsTest < Minitest::Test
     assert widget.ulid
   end
 
+  def test_manual_id_generation
+    ulid_id = ULID.generate
+    user = User.new(id: ulid_id)
+
+    # here testing that cast is not messing with the setter
+    assert user.id == ulid_id
+
+    user.save
+    assert user.id == ulid_id
+  end
+
+  def test_validate_ulid_format
+    non_ulid_id = "I am not a ulid"
+
+    assert_raises(ArgumentError) { User.new(id: non_ulid_id) }
+  end
+
   def test_has_many_through
     # Doesn't work until https://github.com/rails/rails/issues/35839 is released
 #    user = User.create!
