@@ -7,60 +7,48 @@ require "minitest/autorun"
 db_sets = {
   "sqlite3" => {
     adapter: 'sqlite3',
-    name: ':memory:'
+    database: ':memory:'
   },
   "mysql56" => {
     host: 'mysql56',
     adapter: 'mysql2',
     username: 'root',
     password: 'password',
-    name: 'test'
+    database: 'test',
+    encoding: 'utf8mb4',
+    charset: 'utf8mb4'
   },
   "mysql57" => {
     host: 'mysql57',
     adapter: 'mysql2',
     username: 'root',
     password: 'password',
-    name: 'test'
+    database: 'test'
   },
   "mysql80" => {
     host: 'mysql80',
     adapter: 'mysql2',
     username: 'root',
     password: 'password',
-    name: 'test'
+    database: 'test'
   },
   "pg12" => {
     host: 'pg12',
     adapter: 'postgresql',
     username: 'postgres',
-    name: 'test'
+    database: 'test'
   },
 }
 db = db_sets[ENV["DB"]] || db_sets['sqlite3']
 
-if db[:adapter] != 'sqlite3'
-  ActiveRecord::Base.establish_connection(
-    host: db[:host],
-    adapter: db[:adapter],
-    username: db[:username],
-    password: db[:password],
-  #  database: db[:name]
-  )
+unless db[:adapter] == 'sqlite3'
+  ActiveRecord::Base.establish_connection(db.except(:database))
+  ActiveRecord::Base.connection.drop_database(db[:database]) rescue nil
 
-  ActiveRecord::Base.connection.drop_database(db[:name]) rescue nil
-  ActiveRecord::Base.connection.create_database(db[:name])
-
-  ActiveRecord::Base.connection.disconnect!
+  ActiveRecord::Base.connection.create_database(db[:database], charset: db[:charset])
 end
 
-ActiveRecord::Base.establish_connection(
-  host: db[:host],
-  adapter: db[:adapter],
-  username: db[:username],
-  password: db[:password],
-  database: db[:name]
-)
+ActiveRecord::Base.establish_connection(db)
 
 ActiveRecord::Schema.define do
   self.verbose = false
