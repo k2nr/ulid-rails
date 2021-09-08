@@ -5,8 +5,8 @@ require "ulid/rails/version"
 Gem::Specification.new do |spec|
   spec.name = "ulid-rails"
   spec.version = ULID::Rails::VERSION
-  spec.authors = ["Kazunori Kajihiro"]
-  spec.email = ["kazunori.kajihiro@gmail.com"]
+  spec.authors = ["Kazunori Kajihiro", "Zendesk"]
+  spec.email = ["kazunori.kajihiro@gmail.com", "ruby-core@zendesk.com"]
 
   spec.summary = "ULID for rails"
   spec.description = "ULID for rails"
