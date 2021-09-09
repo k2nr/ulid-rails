@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   test:
-    image: ruby:2.6
+    image: "ruby:${RUBY_VERSION}" 
     command: sh -c "rm -f Gemfile.lock && bundle install && bin/run_tests"
     depends_on:
       pg12:
