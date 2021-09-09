@@ -1,49 +1,53 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
-require 'irb'
+require "irb"
 require "ulid/rails"
 
 require "minitest/autorun"
 
 db_sets = {
   "sqlite3" => {
-    adapter: 'sqlite3',
-    database: ':memory:'
+    adapter: "sqlite3",
+    database: ":memory:"
   },
   "mysql56" => {
-    host: 'mysql56',
-    adapter: 'mysql2',
-    username: 'root',
-    password: 'password',
-    database: 'test',
-    encoding: 'utf8mb4',
-    charset: 'utf8mb4'
+    host: "mysql56",
+    adapter: "mysql2",
+    username: "root",
+    password: "password",
+    database: "test",
+    encoding: "utf8mb4",
+    charset: "utf8mb4"
   },
   "mysql57" => {
-    host: 'mysql57',
-    adapter: 'mysql2',
-    username: 'root',
-    password: 'password',
-    database: 'test'
+    host: "mysql57",
+    adapter: "mysql2",
+    username: "root",
+    password: "password",
+    database: "test"
   },
   "mysql80" => {
-    host: 'mysql80',
-    adapter: 'mysql2',
-    username: 'root',
-    password: 'password',
-    database: 'test'
+    host: "mysql80",
+    adapter: "mysql2",
+    username: "root",
+    password: "password",
+    database: "test"
   },
   "pg12" => {
-    host: 'pg12',
-    adapter: 'postgresql',
-    username: 'postgres',
-    database: 'test'
-  },
+    host: "pg12",
+    adapter: "postgresql",
+    username: "postgres",
+    database: "test"
+  }
 }
-db = db_sets[ENV["DB"]] || db_sets['sqlite3']
+db = db_sets[ENV["DB"]] || db_sets["sqlite3"]
 
-unless db[:adapter] == 'sqlite3'
+unless db[:adapter] == "sqlite3"
   ActiveRecord::Base.establish_connection(db.except(:database))
-  ActiveRecord::Base.connection.drop_database(db[:database]) rescue nil
+  begin
+    ActiveRecord::Base.connection.drop_database(db[:database])
+  rescue
+    nil
+  end
 
   ActiveRecord::Base.connection.create_database(db[:database], charset: db[:charset])
 end

@@ -4,7 +4,7 @@ module ULID
   module Rails
     module Formatter
       def self.format(v)
-        sanitized = v.delete('-').hex
+        sanitized = v.delete("-").hex
         Base32::Crockford.encode(sanitized).rjust(26, "0")
       end
 
