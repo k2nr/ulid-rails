@@ -3,8 +3,12 @@
 ## 0.5
 
 - Ensure ULID order respects timestamp order to millisecond precision.
-
 - Validation of ULID format when setting value. A wrong format value will trigger a `ULID::Rails::ArgumentError`.
+
+## 0.4
+
+- Support old ruby versions
+- Fix auto_generate #2
 
 ## 0.3
 
