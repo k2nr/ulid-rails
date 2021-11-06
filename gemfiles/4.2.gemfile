@@ -1,0 +1,8 @@
+source "https://rubygems.org"
+
+gem "activesupport", "~> 4.2"
+gem "activemodel", "~> 4.2"
+gem "activerecord", "~> 4.2"
+gem "sqlite3", "~> 1.3.6"
+gem "mysql2"
+gem "pg", "~> 0.15" # https://github.com/rails/rails/blob/11f2bdf75a888682b34df0f9be03b94f54fc6796/activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb#L15-L17
