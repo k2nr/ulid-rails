@@ -11,6 +11,15 @@ class ULID::RailsTest < Minitest::Test
     assert id == user.id
   end
 
+  def test_custom_primary_key
+    assert Custom.primary_key != "id"
+    assert Custom.primary_key == "unique_id"
+
+    custom = Custom.create!
+    assert custom.unique_id.is_a? String
+    assert custom.unique_id.length == 26
+  end
+
   def test_has_many
     user = User.create!
     book = user.books.create!

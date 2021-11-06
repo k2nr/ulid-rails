@@ -1,5 +1,9 @@
 # ulid-rails CHANGELOG
 
+## Unreleased
+
+ - Allow custom ULID primary keys
+
 ## 0.5
 
 - Ensure ULID order respects timestamp order to millisecond precision.

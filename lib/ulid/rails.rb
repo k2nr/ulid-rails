@@ -13,6 +13,8 @@ module ULID
 
     class_methods do
       def ulid(column_name, primary_key: false, auto_generate: nil)
+        self.primary_key = column_name if primary_key
+
         attribute column_name, ULID::Rails::Type.new
 
         auto_generate = primary_key || auto_generate

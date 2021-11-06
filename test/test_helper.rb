@@ -66,6 +66,10 @@ ActiveRecord::Schema.define do
     t.binary :user_id, limit: 16
   end
 
+  create_table(:custom, id: false) do |t|
+    t.binary :unique_id, limit: 16, primary_key: true
+  end
+
   create_table(:user_articles, id: false) do |t|
     t.binary :id, limit: 16, primary_key: true
     t.binary :user_id, limit: 16
@@ -88,6 +92,13 @@ class User < ActiveRecord::Base
   has_many :books
   has_many :user_articles
   has_many :articles, through: :user_articles
+end
+
+class Custom < ActiveRecord::Base
+  self.table_name = "custom"
+
+  include ULID::Rails
+  ulid :unique_id, primary_key: true
 end
 
 class Book < ActiveRecord::Base
