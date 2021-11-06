@@ -1,6 +1,5 @@
 require "active_record"
 require "active_support/concern"
-require "active_model/type"
 require "ulid"
 require "base32/crockford"
 require "ulid/rails/version"
@@ -45,7 +44,14 @@ module ULID
       end
     end
 
-    ActiveModel::Type.register(:ulid, ULID::Rails::Type)
+    case "#{ActiveRecord::VERSION::MAJOR}.#{ActiveRecord::VERSION::MINOR}"
+    when "4.2"
+      # no-op
+    else
+      require "active_model/type"
+      ActiveModel::Type.register(:ulid, ULID::Rails::Type)
+    end
+
     ActiveRecord::ConnectionAdapters::TableDefinition.send :include, Patch::Migrations
   end
 end

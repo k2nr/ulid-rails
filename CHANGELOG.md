@@ -1,5 +1,9 @@
 # ulid-rails CHANGELOG
 
+## Unreleased
+
+ - Add support for Rails 4.2, 5.0 and 5.1
+
 ## 0.5
 
 - Ensure ULID order respects timestamp order to millisecond precision.

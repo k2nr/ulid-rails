@@ -39,6 +39,9 @@ class ULID::RailsTest < Minitest::Test
   end
 
   def test_validate_ulid_format
+    # Validation was introduced in 5.0, https://github.com/rails/rails/commit/8e633e505880755e7e366ccec2210bbe2b5436e7
+    return if "4.2" == "#{ActiveRecord::VERSION::MAJOR}.#{ActiveRecord::VERSION::MINOR}"
+
     non_ulid_id = "I am not a ulid"
 
     assert_raises(ULID::Rails::ArgumentError) { User.new(id: non_ulid_id) }
