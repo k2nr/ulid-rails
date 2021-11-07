@@ -46,7 +46,22 @@ module ULID
 
     case "#{ActiveRecord::VERSION::MAJOR}.#{ActiveRecord::VERSION::MINOR}"
     when "4.2"
-      # no-op
+      # Fixes missing primary_key in Rails 4.2 with mysql,sqlite adapter
+      # https://github.com/rails/rails/commit/3cbfba6881fca957c62fecfc9467afd459f5a554
+      ActiveRecord::ConnectionAdapters::AbstractAdapter::SchemaCreation.prepend(
+        Module.new do
+          def visit_ColumnDefinition(o)
+            column_sql = super
+            return column_sql if o.type == :primary_key
+
+            adapter = ::ActiveRecord::Base.respond_to?(:connection_db_config) ? ::ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] : ::ActiveRecord::Base.connection_config[:adapter]
+
+            column_sql << " PRIMARY KEY" if o.primary_key == true && adapter != "postgresql"
+
+            column_sql
+          end
+        end
+      )
     else
       require "active_model/type"
       ActiveModel::Type.register(:ulid, ULID::Rails::Type)
