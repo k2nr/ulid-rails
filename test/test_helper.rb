@@ -83,6 +83,8 @@ end
 
 class User < ActiveRecord::Base
   include ULID::Rails
+  self.primary_key = :id
+
   ulid :id, primary_key: true
 
   has_many :books
@@ -92,6 +94,8 @@ end
 
 class Book < ActiveRecord::Base
   include ULID::Rails
+  self.primary_key = :id
+
   ulid :id, primary_key: true
   ulid :user_id
 
@@ -100,6 +104,8 @@ end
 
 class UserArticle < ActiveRecord::Base
   include ULID::Rails
+  self.primary_key = :id
+
   ulid :id, primary_key: true
   ulid :user_id
   ulid :article_id
@@ -110,6 +116,8 @@ end
 
 class Article < ActiveRecord::Base
   include ULID::Rails
+  self.primary_key = :id
+
   ulid :id, primary_key: true
 end
 
