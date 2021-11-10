@@ -114,6 +114,18 @@ Just run the below command to test with all supported DB engines.
 $ docker-compose run test
 ```
 
+Or run with a specific ActiveRecord version
+
+```
+$ docker-compose run -e AR_VERSION=6.1 test
+```
+
+Or run tests locally, without docker-compose
+
+```
+$ AR_VERSION=4.2 bundle update && AR_VERSION=4.2 bundle exec rake test
+```
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
