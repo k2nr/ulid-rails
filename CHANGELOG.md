@@ -4,6 +4,10 @@
 
 - Drop support for Rails 4.2.
 
+### Breaking Changes
+
+- `primary_key` option has been removed. You need to specify `auto_generate: true` to automatically fill your primary key columns.
+
 ## 0.6.0
 
 - Add support for Rails 4.2, 5.0 and 5.1.

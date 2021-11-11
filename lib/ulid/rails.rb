@@ -12,10 +12,9 @@ module ULID
     extend ActiveSupport::Concern
 
     class_methods do
-      def ulid(column_name, primary_key: false, auto_generate: nil)
+      def ulid(column_name, auto_generate: false)
         attribute column_name, ULID::Rails::Type.new
 
-        auto_generate = primary_key || auto_generate
         if auto_generate
           before_create do
             send("#{column_name}=", ULID.generate) if send(column_name).nil?

@@ -1,6 +1,6 @@
 # ULID::Rails
 
-This gem makes it possible to use [ULID](https://github.com/ulid/spec) for DB primary keys in a Ruby on Rails app.
+This gem makes it possible to use [ULID](https://github.com/ulid/spec) for DB in a Ruby on Rails app.
 
 
 ## Installation
@@ -41,7 +41,7 @@ Just add the below lines to your models.
 ```ruby
 class MyModel < ApplicationRecord
   include ULID::Rails
-  ulid :id, primary_key: true # The first argument is the ULID column name
+  ulid :id, auto_generate: true # The first argument is the ULID column name
 end
 ```
 
@@ -53,7 +53,7 @@ Since ULID includes milli seconds precision timestamp, you don't need to store `
 ```ruby
 class MyModel < ApplicationRecord
   include ULID::Rails
-  ulid :id, primary_key: true # The first argument is the ULID column name
+  ulid :id, auto_generate: true # The first argument is the ULID column name
 
   # defines `created_at` method which extract timestamp value from id column.
   # This way you don't need physical `created_at` column.
@@ -82,14 +82,13 @@ end
 
 ### Auto-generate ULID
 
-If `primary_key` is `true`, ULID is auto-generated before create by default.
-You can enable or disable auto-generation with `auto_generate` option.
+If `auto_generate` is `true`, ULID is auto-generated before create by default.
+If not specified, the default is `false`.
 
 ```
 class Model < ApplicationRecord
-  ulid :id, primary_key: true # primary key. auto-generate enabled
+  ulid :id, auto_generate: true #  auto-generate enabled
   ulid :foreign_key # auto-generate disabled
-  ulid :ulid, auto_generate: true # non primary, auto-generate enabled
 end
 ```
 
