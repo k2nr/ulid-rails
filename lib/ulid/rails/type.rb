@@ -1,21 +1,12 @@
+require "active_model/type"
 require "ulid/rails/formatter"
 require "ulid/rails/validator"
 require "ulid/rails/errors"
-require "ulid/rails/constants"
 
 module ULID
   module Rails
-    case RAILS_VERSION
-    when "4.2"
-      require "active_record/type"
-      Binary = ActiveRecord::Type::Binary
-    else
-      require "active_model/type"
-      Binary = ActiveModel::Type::Binary
-    end
-
-    class Type < Binary
-      class Data < Binary::Data
+    class Type < ActiveModel::Type::Binary
+      class Data < ActiveModel::Type::Binary::Data
         alias_method :hex, :to_s
       end
 
@@ -47,16 +38,6 @@ module ULID
           Data.new(@formatter.unformat(value))
         when "postgresql"
           Data.new([@formatter.unformat(value)].pack("H*"))
-        end
-      end
-
-      if RAILS_4_2
-        alias_method :type_cast_for_database, :serialize
-        alias_method :type_cast_from_database, :deserialize
-
-        def type_cast_from_user(value)
-          assert_valid_value(value)
-          super
         end
       end
 

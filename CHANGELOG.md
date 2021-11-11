@@ -1,5 +1,9 @@
 # ulid-rails CHANGELOG
 
+## Unreleased
+
+- Drop support for Rails 4.2.
+
 ## 0.6
 
  - Add support for Rails 4.2, 5.0 and 5.1.
