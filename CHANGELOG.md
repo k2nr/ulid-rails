@@ -2,7 +2,7 @@
 
 ## Unreleased
 
- - Add support for Rails 4.2.
+ - Add support for Rails 4.2, 5.0 and 5.1.
 
 ## 0.5
 

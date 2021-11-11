@@ -6,12 +6,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        activerecord-version: ["4.2", "5.2", "6.0", "6.1"]
+        activerecord-version: ["5.0", "5.1", "4.2", "5.2", "6.0", "6.1"]
         ruby-version: ["2.6", "2.7", "3.0"]
         exclude:
           - activerecord-version: "4.2"
             ruby-version: "2.7"
           - activerecord-version: "4.2"
+            ruby-version: "3.0"
+          - activerecord-version: "5.0"
+            ruby-version: "3.0"
+          - activerecord-version: "5.1"
             ruby-version: "3.0"
           - activerecord-version: "5.2"
             ruby-version: "3.0"
