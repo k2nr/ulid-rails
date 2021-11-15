@@ -1,11 +1,11 @@
 require "active_record"
 require "active_support/concern"
+require "active_model/type"
 require "ulid"
 require "base32/crockford"
 require "ulid/rails/version"
 require "ulid/rails/type"
 require "ulid/rails/patch"
-require "ulid/rails/constants"
 
 module ULID
   module Rails
@@ -45,11 +45,7 @@ module ULID
       end
     end
 
-    unless RAILS_4_2
-      require "active_model/type"
-      ActiveModel::Type.register(:ulid, ULID::Rails::Type)
-    end
-
+    ActiveModel::Type.register(:ulid, ULID::Rails::Type)
     ActiveRecord::ConnectionAdapters::TableDefinition.send :include, Patch::Migrations
   end
 end
