@@ -4,25 +4,25 @@
 
 - Drop support for Rails 4.2.
 
-## 0.6
+## 0.6.0
 
- - Add support for Rails 4.2, 5.0 and 5.1.
+- Add support for Rails 4.2, 5.0 and 5.1.
 
-## 0.5
+## 0.5.0
 
 - Ensure ULID order respects timestamp order to millisecond precision.
 - Validation of ULID format when setting value. A wrong format value will trigger a `ULID::Rails::ArgumentError`.
 
-## 0.4
+## 0.4.0
 
 - Support old ruby versions
 - Fix auto_generate #2
 
-## 0.3
+## 0.3.0
 
 - Support PostgresQL
 
-## 0.2
+## 0.2.0
 
 ### Breaking Changes
 
