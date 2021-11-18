@@ -5,12 +5,21 @@ require "ulid/rails/version"
 Gem::Specification.new do |spec|
   spec.name = "ulid-rails"
   spec.version = ULID::Rails::VERSION
+  spec.required_ruby_version = ">= 2.5.0"
   spec.authors = ["Kazunori Kajihiro", "Zendesk"]
   spec.email = ["kazunori.kajihiro@gmail.com", "ruby-core@zendesk.com"]
 
   spec.summary = "ULID for rails"
   spec.description = "ULID for rails"
+  spec.homepage = "https://github.com/k2nr/ulid-rails/"
   spec.license = "MIT"
+
+  spec.metadata = {
+    "changelog_uri" => "https://github.com/k2nr/ulid-rails/blob/master/CHANGELOG.md",
+    "source_code_uri" => "https://github.com/k2nr/ulid-rails/",
+    "bug_tracker_uri" => "https://github.com/k2nr/ulid-rails/issues",
+    "rubygems_mfa_required" => "true"
+  }
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
