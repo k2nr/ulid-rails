@@ -11,6 +11,7 @@
 ## 0.6.0
 
 - Add support for Rails 4.2, 5.0 and 5.1.
+- Known Issue: AREL expressions incorrectly serialize ULID values in Rails 4.2 (#27).
 
 ## 0.5.0
 
