@@ -27,6 +27,20 @@ class ULID::RailsTest < Minitest::Test
     assert id == book.id
   end
 
+  def test_eager_load
+    # With eager_load, Active Record loads all specified associations using a LEFT OUTER JOIN.
+    User.delete_all
+    Book.delete_all
+
+    3.times do
+      User.create!.tap { |u| u.books.create! }
+    end
+
+    users = User.eager_load(:books).limit(5)
+    assert users.count == 3
+    assert users.books.count == 3
+  end
+
   def test_manual_id_generation
     ulid_id = ULID.generate
     user = User.new(id: ulid_id)
