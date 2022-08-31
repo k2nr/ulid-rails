@@ -2,9 +2,7 @@
 
 This gem makes it possible to use [ULID](https://github.com/ulid/spec) for DB in a Ruby on Rails app.
 
-
 ## Installation
-
 
 ```ruby
 gem 'ulid-rails'
@@ -12,13 +10,19 @@ gem 'ulid-rails'
 
 And then execute:
 
-    $ bundle
+```
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install ulid-rails
+```
+$ gem install ulid-rails
+```
 
 ## Usage
+
+First, load up the gem with `require 'ulid/rails'`.
 
 ### Migrations
 
@@ -32,7 +36,6 @@ Specify `id: false` to `create_table` and add `id` column as 16-byte binary type
     end
   end
 ```
-
 
 ### Model Changes
 
