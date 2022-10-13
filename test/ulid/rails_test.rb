@@ -51,14 +51,11 @@ class ULID::RailsTest < Minitest::Test
   end
 
   def test_has_many_through
-    # Doesn't work until https://github.com/rails/rails/issues/35839 is released
-    #    user = User.create!
-    #    article = user.articles.create!
-    #    user.reload
-    #
-    #    binding.irb
-    #
-    #    assert user.articles.count == 1
-    #    assert user.articles[0] == article
+    user = User.create!
+    article = user.articles.create!
+    user.reload
+
+    assert user.articles.count == 1
+    assert user.articles[0] == article
   end
 end
