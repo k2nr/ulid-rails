@@ -106,6 +106,13 @@ You need to specicfy `type` option
     end
 ```
 
+### Many to many associations
+
+Please note that this library does't work properly with `has_and_belongs_to_many` associations.
+But you can work around that by using `has_many, :through` association. You have to make sure
+that you specify an association between each model and the join model on both ends, [here is an example](https://github.com/k2nr/ulid-rails/blob/master/test/test_helper.rb#L115).
+Be careful because when not configured properly, this type of error is silent. The type casting will fail and therefore your model won't return associated records.
+
 ## Development
 
 ### Run tests
