@@ -68,6 +68,24 @@ class ULID::RailsTest < Minitest::Test
     assert_equal user.articles[0], article
   end
 
+  def test_eager_loading
+    user = User.create!
+    user.books.create!
+
+    result = User.eager_load(:books).to_a
+
+    assert_equal [user], result
+  end
+
+  def test_eager_loading_limit
+    user = User.create!
+    user.books.create!
+
+    result = User.eager_load(:books).limit(1).to_a
+
+    assert_equal [user], result
+  end
+
   private
 
   def model_classes
