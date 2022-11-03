@@ -12,4 +12,4 @@ jobs:
         with:
           ruby-version: 3.0
           bundler-cache: true
-      - run: bundle exec standardrb
+      - run: bundle exec rubocop
