@@ -1,6 +1,10 @@
 require "test_helper"
 
 class ULID::RailsTest < Minitest::Test
+  def setup
+    model_classes.each(&:delete_all)
+  end
+
   def test_auto_generate_primary_key
     user = User.create!
 
@@ -62,5 +66,11 @@ class ULID::RailsTest < Minitest::Test
 
     assert_equal 1, user.articles.count
     assert_equal user.articles[0], article
+  end
+
+  private
+
+  def model_classes
+    ActiveRecord::Base.descendants - [ActiveRecord::InternalMetadata, ActiveRecord::SchemaMigration]
   end
 end
