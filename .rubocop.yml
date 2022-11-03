@@ -8,3 +8,5 @@ inherit_gem:
 
 AllCops:
   NewCops: enable
+  Exclude:
+    - 'vendor/**/*'
