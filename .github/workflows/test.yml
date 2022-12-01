@@ -5,19 +5,16 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         activerecord-version: ["5.0", "5.1", "5.2", "6.0", "6.1", "7.0"]
         ruby-version: ["2.6", "2.7", "3.0"]
         exclude:
-          - activerecord-version: "5.0"
-            ruby-version: "3.0"
-          - activerecord-version: "5.1"
-            ruby-version: "3.0"
-          - activerecord-version: "5.2"
-            ruby-version: "3.0"
-          - activerecord-version: "7.0"
-            ruby-version: "2.6"
+          - {activerecord-version: "5.0", ruby-version: "3.0"}
+          - {activerecord-version: "5.1", ruby-version: "3.0"}
+          - {activerecord-version: "5.2", ruby-version: "3.0"}
+          - {activerecord-version: "7.0", ruby-version: "2.6"}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Test ActiveRecord ${{ matrix.activerecord-version }} and Ruby ${{ matrix.ruby-version }}
         run: RUBY_VERSION=${{ matrix.ruby-version }} docker-compose run -e AR_VERSION=${{ matrix.activerecord-version }} test
