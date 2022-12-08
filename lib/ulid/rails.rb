@@ -46,5 +46,13 @@ module ULID
 
     ActiveModel::Type.register(:ulid, ULID::Rails::Type)
     ActiveRecord::ConnectionAdapters::TableDefinition.send :include, Patch::Migrations
+    case ActiveRecord::VERSION::MAJOR
+    when 5
+      ActiveRecord::FinderMethods.prepend(Patch::FinderMethods) unless ActiveRecord::VERSION::MINOR < 2
+    when 6
+      ActiveRecord::FinderMethods.prepend(Patch::FinderMethods)
+    when 7
+      ActiveRecord::ConnectionAdapters::SchemaStatements.prepend(Patch::SchemaStatements)
+    end
   end
 end
