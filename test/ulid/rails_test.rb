@@ -78,6 +78,8 @@ class ULID::RailsTest < Minitest::Test
   end
 
   def test_eager_loading_limit
+    skip if ActiveRecord::VERSION::MAJOR == 5 && ActiveRecord::VERSION::MINOR < 2
+
     user = User.create!
     user.books.create!
 
