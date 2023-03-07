@@ -58,26 +58,26 @@ ActiveRecord::Schema.define do
   self.verbose = false
 
   create_table(:users, id: false) do |t|
-    t.binary :id, limit: 16, primary_key: true
+    t.column :id, 'binary(16)', primary_key: true
   end
 
   create_table(:books, id: false) do |t|
-    t.binary :id, limit: 16, primary_key: true
-    t.binary :user_id, limit: 16
+    t.column :id, 'binary(16)', primary_key: true
+    t.column :user_id, 'binary(16)'
   end
 
   create_table(:user_articles, id: false) do |t|
-    t.binary :id, limit: 16, primary_key: true
-    t.binary :user_id, limit: 16
-    t.binary :article_id, limit: 16
+    t.column :id, 'binary(16)', primary_key: true
+    t.column :user_id, 'binary(16)'
+    t.column :article_id, 'binary(16)'
   end
 
   create_table(:articles, id: false) do |t|
-    t.binary :id, limit: 16, primary_key: true
+    t.column :id, 'binary(16)', primary_key: true
   end
 
   create_table(:widgets) do |t|
-    t.binary :ulid, limit: 16
+    t.column :ulid, 'binary(16)'
   end
 end
 
