@@ -31,11 +31,13 @@ Specify `id: false` to `create_table` and add `id` column as 16-byte binary type
 ```ruby
   def change
     create_table :users, id: false do |t|
-      t.binary :id, limit: 16, auto_generate: true
+      t.column :id, 'binary(16)', auto_generate: true
       # ...
     end
   end
 ```
+
+You can also declare the `id` column as `t.binary :id, limit: 16`. However, this syntax will generate a SQL that makes the id as `VARBINARY(16)` instead of `BINARY(16)`.
 
 ### Model Changes
 
@@ -75,7 +77,7 @@ A virtual column is useful if you want to add index on the timestamp column or w
 
 ```ruby
 create_table :users, id: false do |t|
-  t.binary :id, limit: 16, auto_generate: true
+  t.column :id, 'binary(16)', auto_generate: true
   t.datetime :updated_at
   t.virtual_ulid_timestamp :created_at, :id
 end
