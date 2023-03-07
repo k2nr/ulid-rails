@@ -1,5 +1,9 @@
 # ulid-rails CHANGELOG
 
+## Unreleased
+
+- Drop support for ruby 2.6.
+
 ## 1.1.0
 
 - Fix eager loading with limit/offset on models that have ulid primary key. The fix only applies to ActiveRecord 5.2, 6 and 7 (#38).
