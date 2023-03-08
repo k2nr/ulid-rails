@@ -37,6 +37,8 @@ Specify `id: false` to `create_table` and add `id` column as 16-byte binary type
   end
 ```
 
+**MySQL note:** You can also declare the `id` column as `t.column :id, 'binary(16)'` when using MySQL, given that the syntax in the example will generate a SQL that makes the id as `VARBINARY(16)` instead of `BINARY(16)`.
+
 ### Model Changes
 
 Just add the below lines to your models.
