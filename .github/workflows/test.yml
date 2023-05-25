@@ -6,9 +6,11 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   tests:
+    name: ActiveRecord ${{ matrix.activerecord-version }} / Ruby ${{ matrix.ruby-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -28,5 +30,7 @@ jobs:
           - {activerecord-version: "6.0", ruby-version: "3.1"}
     steps:
       - uses: actions/checkout@v3
-      - name: Test ActiveRecord ${{ matrix.activerecord-version }} and Ruby ${{ matrix.ruby-version }}
-        run: RUBY_VERSION=${{ matrix.ruby-version }} docker-compose run -e AR_VERSION=${{ matrix.activerecord-version }} test
+      - run: docker-compose run test
+        env:
+          RUBY_VERSION: ${{ matrix.ruby-version }}
+          AR_VERSION: ${{ matrix.activerecord-version }}
