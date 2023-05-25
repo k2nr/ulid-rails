@@ -1,8 +1,10 @@
 version: '3.6'
 services:
   test:
-    image: "ruby:${RUBY_VERSION}" 
+    image: "ruby:${RUBY_VERSION}"
     command: sh -c "rm -f Gemfile.lock && bundle install && bin/run_tests"
+    environment:
+      - AR_VERSION=${AR_VERSION}
     depends_on:
       pg12:
         condition: service_healthy
@@ -23,20 +25,20 @@ services:
       MYSQL_ROOT_PASSWORD: password
     command: --innodb-large-prefix --innodb-file-format=barracuda
     healthcheck:
-      test:  mysql --password=password -e "show databases;"
+      test: mysql --password=password -e "show databases;"
   mysql57:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
     healthcheck:
-      test:  mysql --password=password -e "show databases;"
+      test: mysql --password=password -e "show databases;"
   mysql80:
     image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: password
     healthcheck:
-      test:  mysql --password=password -e "show databases;"
+      test: mysql --password=password -e "show databases;"
   pg12:
     image: postgres:12
     environment:

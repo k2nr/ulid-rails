@@ -112,7 +112,7 @@ You need to specicfy `type` option
 
 Please note that this library doesn't work properly with `has_and_belongs_to_many` associations.
 
-Our recommendation is to be explicit and instead use the `has_many, through: join_class` association. 
+Our recommendation is to be explicit and instead use the `has_many, through: join_class` association.
 Notice that for it to work properly you must specify the `has_many` to the join class in the main classes of the association,
 and your join class must have `belongs_to` main classes defined as shown in the example below:
 
