@@ -2,7 +2,10 @@
 
 ## Unreleased
 
+## 1.1.1
+
 - Drop support for ruby 2.6.
+- Fix compatibility with ActiveRecord 7.0.5+.
 
 ## 1.1.0
 

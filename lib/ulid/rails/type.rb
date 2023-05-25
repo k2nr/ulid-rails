@@ -23,9 +23,24 @@ module ULID
       def deserialize(value)
         return nil if value.nil?
 
-        value = value.to_s if value.is_a?(Data)
-        value = value.unpack1("H*") if value.encoding == Encoding::ASCII_8BIT
-        value = value[2..-1] if value.start_with?("\\x")
+        case adapter
+        when "mysql2"
+          if value.is_a?(Data)
+            value = value.to_s
+          elsif value.is_a?(String)
+            value = value.unpack1("H*")
+          end
+        when "postgresql"
+          if value.is_a?(Data)
+            value = value.to_s
+            value = value.unpack1("H*")
+          end
+          value = value[2..-1] if value.start_with?("\\x")
+        when "sqlite3"
+          if value.is_a?(Data)
+            value = value.to_s
+          end
+        end
 
         value.length == 32 ? @formatter.format(value) : super
       end
