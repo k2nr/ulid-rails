@@ -9,7 +9,8 @@ module ULID
       end
 
       def self.unformat(v)
-        Base32::Crockford.decode(v).to_s(16).rjust(32, "0")
+        decoded_i = Base32::Crockford.decode(v.to_s).to_i
+        decoded_i.to_s(16).rjust(32, "0")
       end
     end
   end

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Make `ULID::Rails::Formatter.unformat` more resilient wrt. different data types.
+
 ## 1.1.1
 
 - Drop support for ruby 2.6.
