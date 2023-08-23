@@ -167,6 +167,49 @@ class ULID::RailsTest < Minitest::Test
     assert_equal "01ARZ3NDEKTSV4RRFFQ69G5FAV", user.id
   end
 
+  def test_find_with_where_and_singular_string_arg
+    user = User.create!
+
+    assert_equal [user], User.where(id: user.id)
+  end
+
+  def test_find_with_where_and_singular_integer_arg
+    User.create!
+
+    assert_empty User.where(id: 42)
+  end
+
+  def test_find_with_where_and_singular_weird_arg
+    User.create!
+
+    assert_empty User.where(id: Date.new)
+  end
+
+  def test_find_with_where_and_ulid_array
+    user_1 = User.create!
+    user_2 = User.create!
+
+    assert_equal [user_1, user_2].sort, User.where(id: [user_1.id, user_2.id]).sort
+  end
+
+  def test_find_with_where_and_string_array
+    user = User.create!
+
+    assert_equal [user], User.where(id: [user.id, "this-is-not-a-ulid"])
+  end
+
+  def test_find_with_where_and_integer_array
+    User.create!
+
+    assert_empty User.where(id: [42, 100])
+  end
+
+  def test_find_with_where_and_mixed_type_array
+    user = User.create!
+
+    assert_equal [user], User.where(id: [42, user.id, Time.now])
+  end
+
   private
 
   def model_classes
