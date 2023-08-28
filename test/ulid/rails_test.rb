@@ -1,5 +1,54 @@
 require "test_helper"
 
+class ULID::Rails::TypeTest < Minitest::Test
+  def setup
+    @ulid = "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+  end
+
+  def type
+    case database_adapter
+    when "mysql2"
+      ULID::Rails::Type.new
+    when "sqlite3"
+      ULID::Rails::SqliteType.new
+    when "postgresql"
+      ULID::Rails::PostgresqlType.new
+    else
+      raise "Unknown #{database_adapter}"
+    end
+  end
+
+  def test_serialize_to_s
+    expected_string = {
+      "mysql2" => "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b",
+      "postgresql" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b
+    }.fetch(database_adapter)
+
+    assert_equal expected_string, type.serialize(@ulid).to_s
+  end
+
+  def test_serialize_hex
+    expected_hex = {
+      "mysql2" => "01563e3ab5d3d6764c61efb99302bd5b",
+      "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b",
+      "postgresql" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b
+    }.fetch(database_adapter)
+
+    assert_equal expected_hex, type.serialize(@ulid).hex
+  end
+
+  def test_deserialize
+    serialized_value = {
+      "mysql2" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b,
+      "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b".b,
+      "postgresql" => "\\x01563e3ab5d3d6764c61efb99302bd5b".b
+    }.fetch(database_adapter)
+
+    assert_equal @ulid, type.deserialize(serialized_value)
+  end
+end
+
 class ULID::RailsTest < Minitest::Test
   def setup
     model_classes.each(&:delete_all)
