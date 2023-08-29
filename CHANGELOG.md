@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Drop support for Rails 5.0 and Rails 5.1.
+
 ## 1.1.1
 
 - Drop support for ruby 2.6.

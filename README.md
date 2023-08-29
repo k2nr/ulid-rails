@@ -162,12 +162,8 @@ $ docker-compose run -e AR_VERSION=6.1 test
 Or run tests locally, without docker-compose
 
 ```
-$ AR_VERSION=4.2 bundle update && AR_VERSION=4.2 bundle exec rake test
+$ AR_VERSION=6.1 bundle update && AR_VERSION=6.1 bundle exec rake test
 ```
-
-## Known issues
-
-- ActiveRecord 5.0 and 5.1 do not work properly with some data association loading methods. For example, eager loading with limit/offset on a model that has a ulid ID. Refer to test cases that are skiped for AR 5.0 and 5.1.
 
 ## License
 
