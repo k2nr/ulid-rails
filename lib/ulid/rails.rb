@@ -5,6 +5,8 @@ require "ulid"
 require "base32/crockford"
 require "ulid/rails/version"
 require "ulid/rails/type"
+require "ulid/rails/postgresql_type"
+require "ulid/rails/sqlite_type"
 require "ulid/rails/patch"
 
 module ULID
@@ -13,7 +15,7 @@ module ULID
 
     class_methods do
       def ulid(column_name, auto_generate: false)
-        attribute column_name, ULID::Rails::Type.new
+        attribute column_name, :ulid
 
         if auto_generate
           before_create do
@@ -44,15 +46,10 @@ module ULID
       end
     end
 
-    ActiveModel::Type.register(:ulid, ULID::Rails::Type)
-    ActiveRecord::ConnectionAdapters::TableDefinition.send :include, Patch::Migrations
-    case ActiveRecord::VERSION::MAJOR
-    when 5
-      ActiveRecord::FinderMethods.prepend(Patch::FinderMethods) unless ActiveRecord::VERSION::MINOR < 2
-    when 6
-      ActiveRecord::FinderMethods.prepend(Patch::FinderMethods)
-    when 7
-      ActiveRecord::ConnectionAdapters::SchemaStatements.prepend(Patch::SchemaStatements)
-    end
+    ActiveRecord::Type.register(:ulid, ULID::Rails::Type, override: false)
+    ActiveRecord::Type.register(:ulid, ULID::Rails::PostgresqlType, adapter: :postgresql)
+    ActiveRecord::Type.register(:ulid, ULID::Rails::SqliteType, adapter: :sqlite)
+    ActiveRecord::Type.register(:ulid, ULID::Rails::SqliteType, adapter: :sqlite3)
+    ActiveRecord::ConnectionAdapters::TableDefinition.include(Patch::Migrations)
   end
 end

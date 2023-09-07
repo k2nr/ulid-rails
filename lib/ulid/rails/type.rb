@@ -1,68 +1,78 @@
 require "active_model/type"
-require "ulid/rails/formatter"
-require "ulid/rails/validator"
+require "base32/crockford"
 require "ulid/rails/errors"
 
 module ULID
   module Rails
     class Type < ActiveModel::Type::Binary
-      class Data < ActiveModel::Type::Binary::Data
-        alias_method :hex, :to_s
-      end
-
-      def initialize(formatter = Formatter, validator = Validator)
-        @formatter = formatter
-        @validator = validator
-        super()
-      end
-
       def assert_valid_value(value)
-        raise ArgumentError, "`#{value}` is not a ULID format" unless @validator.is_valid?(value)
+        raise ArgumentError, "`#{value}` is not a ULID format" unless Data.valid_ulid?(value)
+      end
+
+      def cast(value)
+        return nil if value.nil?
+
+        str = value.is_a?(Data) ? value.value : value
+
+        cast_string_to_ulid(str).value
+      end
+
+      def serialize(value)
+        return value if value.is_a?(Data)
+        return Data.null unless value.is_a?(String)
+
+        cast_string_to_ulid(value)
       end
 
       def deserialize(value)
         return nil if value.nil?
 
-        case adapter
-        when "mysql2"
-          if value.is_a?(Data)
-            value = value.to_s
-          elsif value.is_a?(String)
-            value = value.unpack1("H*")
-          end
-        when "postgresql"
-          if value.is_a?(Data)
-            value = value.to_s
-            value = value.unpack1("H*")
-          end
-          value = value[2..-1] if value.start_with?("\\x")
-        when "sqlite3"
-          if value.is_a?(Data)
-            value = value.to_s
-          end
-        end
-
-        value.length == 32 ? @formatter.format(value) : super
-      end
-
-      def serialize(value)
-        return if value.nil?
-
-        case adapter
-        when "mysql2", "sqlite3"
-          Data.new(@formatter.unformat(value))
-        when "postgresql"
-          Data.new([@formatter.unformat(value)].pack("H*"))
-        end
+        super
       end
 
       private
 
-      def adapter
-        if ::ActiveRecord::Base.respond_to?(:connection_db_config)
-          ::ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
+      def cast_string_to_ulid(value, data_class: Data)
+        raise ArgumentError if !value.is_a?(String)
+
+        if data_class.valid_ulid?(value)
+          data_class.new(value)
         else
-          ::ActiveRecord::Base.connection_config[:adapter]
+          data = value.unpack1("H*")
+          data_class.from_serialized(data)
+        end
+      end
+
+      class Data < ActiveModel::Type::Binary::Data
+        def self.null
+          new(nil)
+        end
+
+        def self.from_serialized(data)
+          deserialized = Base32::Crockford.encode(data.hex).rjust(26, "0")
+          new(deserialized)
+        end
+
+        def self.valid_ulid?(str)
+          return true if str.nil?
+
+          str.length == 26 && Base32::Crockford.valid?(str)
+        end
+
+        def initialize(value)
+          @value = nil
+          super if self.class.valid_ulid?(value)
+        end
+
+        attr_reader :value
+
+        def hex
+          return nil if @value.nil?
+
+          hexed = Base32::Crockford.decode(@value).to_s(16).rjust(32, "0")
+          raise ArgumentError if hexed.length > 32
+
+          hexed
         end
       end
     end
