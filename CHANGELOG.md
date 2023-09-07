@@ -2,10 +2,15 @@
 
 ## Unreleased
 
-## 2.0.0.pre.1
+## 2.0.0.pre.2
 
 - Drop support for Rails 5.0 and Rails 5.1.
 - Fix various issues when calling `#where` with non-String values, or multiple ULID values.
+- The following modules/classes have been removed:
+  - `ULID::Rails::Formatter`
+  - `ULID::Rails::Validator`
+  - `ULID::Rails::Patch::FinderMethods`
+  - `ULID::Rails::Patch::SchemaStatements`
 
 ## 1.1.1
 

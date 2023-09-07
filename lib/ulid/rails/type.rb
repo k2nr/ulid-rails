@@ -19,7 +19,7 @@ module ULID
 
       def serialize(value)
         return value if value.is_a?(Data)
-        return Data.null unless value.is_a?(String)
+        return nil unless value.is_a?(String)
 
         cast_string_to_ulid(value)
       end
@@ -44,10 +44,6 @@ module ULID
       end
 
       class Data < ActiveModel::Type::Binary::Data
-        def self.null
-          new(nil)
-        end
-
         def self.from_serialized(data)
           deserialized = Base32::Crockford.encode(data.hex).rjust(26, "0")
           new(deserialized)
