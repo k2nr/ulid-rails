@@ -259,6 +259,12 @@ class ULID::RailsTest < Minitest::Test
     assert_equal [user], User.where(id: [42, user.id, Time.now])
   end
 
+  def test_unset_ulid_type_foreign_key_is_nil
+    book = Book.create!
+
+    assert_nil book.user_id
+  end
+
   private
 
   def model_classes
