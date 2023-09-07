@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.0.pre.1
+
 - Drop support for Rails 5.0 and Rails 5.1.
 - Fix various issues when calling `#where` with non-String values, or multiple ULID values.
 
