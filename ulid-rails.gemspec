@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Kazunori Kajihiro", "Zendesk"]
   spec.email = ["kazunori.kajihiro@gmail.com", "ruby-core@zendesk.com"]
 
-  spec.summary = "ULID for rails"
-  spec.description = "ULID for rails"
+  spec.summary = "ULID for Rails"
+  spec.description = "ULID for Rails"
   spec.homepage = "https://github.com/k2nr/ulid-rails/"
   spec.license = "MIT"
 
@@ -22,12 +22,19 @@ Gem::Specification.new do |spec|
   }
 
   # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files = Dir.chdir(File.expand_path("..", __FILE__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  end
-  spec.bindir = "exe"
-  spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.files = %w[
+    CHANGELOG.md
+    LICENSE.txt
+    README.md
+    lib/ulid/rails.rb
+    lib/ulid/rails/errors.rb
+    lib/ulid/rails/patch.rb
+    lib/ulid/rails/postgresql_type.rb
+    lib/ulid/rails/sqlite_type.rb
+    lib/ulid/rails/type.rb
+    lib/ulid/rails/version.rb
+    ulid-rails.gemspec
+  ]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "ulid", "~> 1.0"
