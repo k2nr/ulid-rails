@@ -26,9 +26,23 @@ db_sets = {
     password: "password",
     database: "test"
   },
+  "mysql57-trilogy" => {
+    host: "mysql57",
+    adapter: "trilogy",
+    username: "root",
+    password: "password",
+    database: "test"
+  },
   "mysql80" => {
     host: "mysql80",
     adapter: "mysql2",
+    username: "root",
+    password: "password",
+    database: "test"
+  },
+  "mysql80-trilogy" => {
+    host: "mysql80",
+    adapter: "trilogy",
     username: "root",
     password: "password",
     database: "test"
@@ -44,6 +58,16 @@ db = db_sets.fetch(ENV["DB"]) do
   warn "Don't have database config for #{ENV["DB"].inspect}." if ENV["DB"]
   warn "Testing against sqlite3."
   db_sets.fetch("sqlite3")
+end
+
+if db[:adapter] == "trilogy"
+  if ActiveRecord.gem_version < Gem::Version.new("6.0")
+    warn "Skipping tests for ActiveRecord v#{ActiveRecord.gem_version} using the #{db[:adapter]} database adapter."
+    exit
+  else
+    require "trilogy_adapter/connection"
+    ActiveRecord::Base.extend(TrilogyAdapter::Connection)
+  end
 end
 
 unless db[:adapter] == "sqlite3"
