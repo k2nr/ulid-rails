@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Ensure compatibility with the Trilogy database adapter.
+
 ## 2.0.0.pre.2
 
 - Drop support for Rails 5.0 and Rails 5.1.

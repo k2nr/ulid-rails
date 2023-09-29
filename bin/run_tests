@@ -12,7 +12,9 @@ test_with_db "sqlite3"
 test_with_db "mysql56"
 
 test_with_db "mysql57"
+test_with_db "mysql57-trilogy"
 
 test_with_db "mysql80"
+test_with_db "mysql80-trilogy"
 
 test_with_db "pg12"

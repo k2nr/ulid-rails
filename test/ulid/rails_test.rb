@@ -7,7 +7,7 @@ class ULID::Rails::TypeTest < Minitest::Test
 
   def type
     case database_adapter
-    when "mysql2"
+    when "mysql2", "trilogy"
       ULID::Rails::Type.new
     when "sqlite3"
       ULID::Rails::SqliteType.new
@@ -21,6 +21,7 @@ class ULID::Rails::TypeTest < Minitest::Test
   def test_serialize_to_s
     expected_string = {
       "mysql2" => "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "trilogy" => "01ARZ3NDEKTSV4RRFFQ69G5FAV",
       "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b",
       "postgresql" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b
     }.fetch(database_adapter)
@@ -31,6 +32,7 @@ class ULID::Rails::TypeTest < Minitest::Test
   def test_serialize_hex
     expected_hex = {
       "mysql2" => "01563e3ab5d3d6764c61efb99302bd5b",
+      "trilogy" => "01563e3ab5d3d6764c61efb99302bd5b",
       "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b",
       "postgresql" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b
     }.fetch(database_adapter)
@@ -41,6 +43,7 @@ class ULID::Rails::TypeTest < Minitest::Test
   def test_deserialize
     serialized_value = {
       "mysql2" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b,
+      "trilogy" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b,
       "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b".b,
       "postgresql" => "\\x01563e3ab5d3d6764c61efb99302bd5b".b
     }.fetch(database_adapter)
@@ -60,6 +63,7 @@ class ULID::RailsTest < Minitest::Test
     raw_id = user.read_attribute_before_type_cast(:id).hex
     expected_raw_id = {
       "mysql2" => "01563e3ab5d3d6764c61efb99302bd5b",
+      "trilogy" => "01563e3ab5d3d6764c61efb99302bd5b",
       "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b",
       "postgresql" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b
     }.fetch(database_adapter)
@@ -69,6 +73,7 @@ class ULID::RailsTest < Minitest::Test
     binary_stored_id = User.last.read_attribute_before_type_cast(:id)
     expected_binary_stored_id = {
       "mysql2" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b,
+      "trilogy" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b,
       "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b".b,
       "postgresql" => "\\x01563e3ab5d3d6764c61efb99302bd5b".b
     }.fetch(database_adapter)
@@ -208,6 +213,7 @@ class ULID::RailsTest < Minitest::Test
     raw_id = user.read_attribute_before_type_cast(:id)
     expected_raw_id = {
       "mysql2" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b,
+      "trilogy" => "\x01V>:\xB5\xD3\xD6vLa\xEF\xB9\x93\x02\xBD[".b,
       "sqlite3" => "01563e3ab5d3d6764c61efb99302bd5b".b,
       "postgresql" => "\\x01563e3ab5d3d6764c61efb99302bd5b".b
     }.fetch(database_adapter)
