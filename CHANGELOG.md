@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Ensure compatibility with the Trilogy database adapter.
+- Ensure compatibility with Rails 7.1.
 
 ## 2.0.0.pre.2
 

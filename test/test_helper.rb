@@ -64,7 +64,7 @@ if db[:adapter] == "trilogy"
   if ActiveRecord.gem_version < Gem::Version.new("6.0")
     warn "Skipping tests for ActiveRecord v#{ActiveRecord.gem_version} using the #{db[:adapter]} database adapter."
     exit
-  else
+  elsif ActiveRecord.gem_version < Gem::Version.new("7.1")
     require "trilogy_adapter/connection"
     ActiveRecord::Base.extend(TrilogyAdapter::Connection)
   end
