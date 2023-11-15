@@ -2,12 +2,11 @@
 
 ## Unreleased
 
+## 2.0.0
+
 - Ensure compatibility with the Trilogy database adapter.
-- Ensure compatibility with Rails 7.1.
-
-## 2.0.0.pre.2
-
 - Drop support for Rails 5.0 and Rails 5.1.
+- Ensure compatibility with Rails 7.1.
 - Fix various issues when calling `#where` with non-String values, or multiple ULID values.
 - The following modules/classes have been removed:
   - `ULID::Rails::Formatter`
