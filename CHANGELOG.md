@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 2.1.0
+
+- Make `ULID::Rails::Type::Data.valid_ulid?` more strict in what is accepted as valid and not.
+
 ## 2.0.0
 
 - Ensure compatibility with the Trilogy database adapter.

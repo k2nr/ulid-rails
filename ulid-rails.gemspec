@@ -5,7 +5,7 @@ require "ulid/rails/version"
 Gem::Specification.new do |spec|
   spec.name = "ulid-rails"
   spec.version = ULID::Rails::VERSION
-  spec.required_ruby_version = ">= 2.5.0"
+  spec.required_ruby_version = ">= 2.6.0"
   spec.authors = ["Kazunori Kajihiro", "Zendesk"]
   spec.email = ["kazunori.kajihiro@gmail.com", "ruby-core@zendesk.com"]
 
@@ -47,5 +47,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "rubocop-minitest"
-  spec.add_development_dependency "standard", "~> 1.16.0"
+  spec.add_development_dependency "standard", "~> 1.32.0"
 end
