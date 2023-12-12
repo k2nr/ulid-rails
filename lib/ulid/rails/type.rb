@@ -44,6 +44,9 @@ module ULID
       end
 
       class Data < ActiveModel::Type::Binary::Data
+        INVALID_CHARACTERS_REGEX = /[ilou]/i.freeze
+        VALID_INITIAL_CHARACTER_REGEX = /^[0-7]/i.freeze
+
         def self.from_serialized(data)
           deserialized = Base32::Crockford.encode(data.hex).rjust(26, "0")
           new(deserialized)
@@ -51,8 +54,11 @@ module ULID
 
         def self.valid_ulid?(str)
           return true if str.nil?
+          return false unless str.length == 26
+          return false if INVALID_CHARACTERS_REGEX.match?(str)
+          return false unless VALID_INITIAL_CHARACTER_REGEX.match?(str)
 
-          str.length == 26 && Base32::Crockford.valid?(str)
+          Base32::Crockford.valid?(str)
         end
 
         def initialize(value)
