@@ -60,6 +60,8 @@ db = db_sets.fetch(ENV["DB"]) do
   db_sets.fetch("sqlite3")
 end
 
+db[:host] = "127.0.0.1" if ENV["CI"]
+
 if db[:adapter] == "trilogy"
   if ActiveRecord.gem_version < Gem::Version.new("6.0")
     warn "Skipping tests for ActiveRecord v#{ActiveRecord.gem_version} using the #{db[:adapter]} database adapter."
