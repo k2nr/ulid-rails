@@ -62,6 +62,9 @@ end
 
 db[:host] = "127.0.0.1" if ENV["CI"]
 
+warn "Using db config:"
+warn db.inspect
+
 if db[:adapter] == "trilogy"
   if ActiveRecord.gem_version < Gem::Version.new("6.0")
     warn "Skipping tests for ActiveRecord v#{ActiveRecord.gem_version} using the #{db[:adapter]} database adapter."
