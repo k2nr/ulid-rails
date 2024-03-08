@@ -1,4 +1,5 @@
 require "active_record"
+require "active_record/fixtures"
 require "active_support/concern"
 require "active_model/type"
 require "ulid"
@@ -51,5 +52,6 @@ module ULID
     ActiveRecord::Type.register(:ulid, ULID::Rails::SqliteType, adapter: :sqlite)
     ActiveRecord::Type.register(:ulid, ULID::Rails::SqliteType, adapter: :sqlite3)
     ActiveRecord::ConnectionAdapters::TableDefinition.include(Patch::Migrations)
+    ActiveRecord::FixtureSet.singleton_class.prepend(Patch::FixtureSet)
   end
 end
