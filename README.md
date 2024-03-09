@@ -1,5 +1,7 @@
 # ULID::Rails
 
+[![CI tests status](https://github.com/k2nr/ulid-rails/actions/workflows/test.yml/badge.svg?branch%3Amaster)](https://github.com/k2nr/ulid-rails/actions/workflows/test.yml?query=branch%3Amaster) [![CI linting status](https://github.com/k2nr/ulid-rails/actions/workflows/lint.yml/badge.svg?branch%3Amaster)](https://github.com/k2nr/ulid-rails/actions/workflows/lint.yml?query=branch%3Amaster)
+
 This gem makes it possible to use [ULID](https://github.com/ulid/spec) for DB in a Ruby on Rails app.
 
 ## Installation
