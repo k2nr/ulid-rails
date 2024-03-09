@@ -91,7 +91,7 @@ class ULID::RailsTest < Minitest::Test
   def test_auto_generate_primary_key
     user = User.create!
 
-    assert user.id.is_a? String
+    assert_kind_of String, user.id
     assert_equal 26, user.id.length
 
     id = user.id
