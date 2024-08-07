@@ -152,16 +152,16 @@ and your join class must have `belongs_to` main classes defined as shown in the 
 Just run the below command to test with all supported DB engines.
 
 ```
-$ docker-compose run test
+$ docker compose run test
 ```
 
 Or run with a specific ActiveRecord version
 
 ```
-$ docker-compose run -e AR_VERSION=6.1 test
+$ docker compose run -e AR_VERSION=6.1 test
 ```
 
-Or run tests locally, without docker-compose
+Or run tests locally, without docker compose
 
 ```
 $ AR_VERSION=6.1 bundle update && AR_VERSION=6.1 bundle exec rake test
