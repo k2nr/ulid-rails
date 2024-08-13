@@ -21,7 +21,7 @@ jobs:
           - {activerecord-version: "5.2", ruby-version: "2.7"}
     steps:
       - uses: actions/checkout@v4
-      - run: docker-compose run test
+      - run: docker compose run test
         env:
           RUBY_VERSION: ${{ matrix.ruby-version }}
           AR_VERSION: ${{ matrix.activerecord-version }}
