@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Ensure compatibility with Rails 7.2.
+
 ## 2.1.0
 
 - Make `ULID::Rails::Type::Data.valid_ulid?` more strict in what is accepted as valid and not.
