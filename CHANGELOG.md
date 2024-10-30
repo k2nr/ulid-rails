@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Ensure compatibility with Rails 8.0.
 - Ensure compatibility with Rails 7.2.
 
 ## 2.1.0

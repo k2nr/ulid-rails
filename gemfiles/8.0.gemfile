@@ -1,0 +1,11 @@
+source "https://rubygems.org"
+
+gemspec path: ".."
+
+gem "activesupport", "~> 8.0.0"
+gem "activemodel", "~> 8.0.0"
+gem "activerecord", "~> 8.0.0"
+gem "sqlite3", ">= 2.1"
+gem "mysql2", "~> 0.5"
+gem "pg", "~> 1.1"
+gem "trilogy", "~> 2.7"
