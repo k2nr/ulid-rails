@@ -101,7 +101,7 @@ end
 
 ### Foreign Keys
 
-You need to specicfy `type` option
+You need to specify the `type` option
 
 ```ruby
     # MySQL
