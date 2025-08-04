@@ -7,5 +7,5 @@ gem "activemodel", "~> 6.1.0"
 gem "activerecord", "~> 6.1.0"
 gem "sqlite3", "~> 1.4", ("< 1.7" if RUBY_VERSION < "3")
 gem "mysql2", "~> 0.5"
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.1", ("< 1.6" if RUBY_VERSION < "3")
 gem "activerecord-trilogy-adapter"

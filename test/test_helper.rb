@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "irb"
 require "pry-byebug"
+require "logger"
 require "ulid/rails"
 
 require "minitest/autorun"
