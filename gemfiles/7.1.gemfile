@@ -5,7 +5,10 @@ gemspec path: ".."
 gem "activesupport", "~> 7.1.0"
 gem "activemodel", "~> 7.1.0"
 gem "activerecord", "~> 7.1.0"
-gem "sqlite3", "~> 1.4", ("< 1.7" if RUBY_VERSION < "3")
+gem "sqlite3", "~> 1.4"
 gem "mysql2", "~> 0.5"
-gem "pg", "~> 1.1", ("< 1.6" if RUBY_VERSION < "3")
+gem "pg", "~> 1.1"
 gem "trilogy", "~> 2.4"
+
+# Former stdlib gems
+gem "irb"
