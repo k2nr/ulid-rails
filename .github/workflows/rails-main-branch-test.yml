@@ -8,11 +8,11 @@ on:
 
 jobs:
   test:
-    name: ActiveRecord main / Ruby 3.3
+    name: ActiveRecord main / Ruby 3.4
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: docker compose run test
         env:
-          RUBY_VERSION: "3.3"
+          RUBY_VERSION: "3.4"
           AR_VERSION: "main"

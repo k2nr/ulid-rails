@@ -1,4 +1,4 @@
-ruby_version: 2.6
+ruby_version: 3.2
 ignore:
   - 'vendor/**/*'
   - 'gemfiles/vendor/**/*'
