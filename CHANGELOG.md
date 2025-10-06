@@ -2,8 +2,9 @@
 
 ## Unreleased
 
-- Ensure compatibility with Rails 8.0.
-- Ensure compatibility with Rails 7.2.
+- Ensure compatibility with Rails 7.2 and 8.0.
+- Drop support for Ruby 2.7, 3.0 and 3.1.
+- Drop support for Rails 5.2, 6.0 and 6.1.
 
 ## 2.1.0
 

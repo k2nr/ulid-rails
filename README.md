@@ -158,13 +158,13 @@ $ docker compose run test
 Or run with a specific ActiveRecord version
 
 ```
-$ docker compose run -e AR_VERSION=6.1 test
+$ docker compose run -e AR_VERSION=7.1 test
 ```
 
 Or run tests locally, without docker compose
 
 ```
-$ AR_VERSION=6.1 bundle update && AR_VERSION=6.1 bundle exec rake test
+$ AR_VERSION=7.1 bundle update && AR_VERSION=7.1 bundle exec rake test
 ```
 
 ## License

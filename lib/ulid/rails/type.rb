@@ -44,8 +44,8 @@ module ULID
       end
 
       class Data < ActiveModel::Type::Binary::Data
-        INVALID_CHARACTERS_REGEX = /[ilou]/i.freeze
-        VALID_INITIAL_CHARACTER_REGEX = /^[0-7]/i.freeze
+        INVALID_CHARACTERS_REGEX = /[ilou]/i
+        VALID_INITIAL_CHARACTER_REGEX = /^[0-7]/i
 
         def self.from_serialized(data)
           deserialized = Base32::Crockford.encode(data.hex).rjust(26, "0")
