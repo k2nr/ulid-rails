@@ -5,6 +5,10 @@ require "ulid/rails/errors"
 module ULID
   module Rails
     class Type < ActiveModel::Type::Binary
+      def type
+        :ulid
+      end
+
       def assert_valid_value(value)
         raise ArgumentError, "`#{value}` is not a ULID format" unless Data.valid_ulid?(value)
       end
